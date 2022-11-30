@@ -1,9 +1,12 @@
-const { SlashCommandBuilder } = require('discord.js');
+const {SlashCommandBuilder} = require("discord.js");
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ping')
-        .setDescription('Replies with pong!'),
+        .setDescription('gives you an information about the roundtrip latency'),
+
     async execute(interaction) {
-        await interaction.reply('pong!');
+        const sent = await interaction.reply({content: 'Pinging...', fetchReply: true, ephemeral: true});
+        await interaction.editReply(`roundtrip latency: ${sent.createdTimestamp - interaction.createdTimestamp}ms`);
     },
 };
